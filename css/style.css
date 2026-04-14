@@ -318,7 +318,9 @@ svg {
     border-radius: 0;
     position: relative;
     z-index: 2;
-    /* Removed blend-mode and horizontal mask so he stays solid */
+    mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 }
 
 .hero__specialist-tag {
@@ -374,31 +376,43 @@ svg {
 
 /* Base floating animation */
 @keyframes float {
-    0% { transform: translateY(0px) scale(1); }
-    50% { transform: translateY(-15px) scale(1.05); }
-    100% { transform: translateY(0px) scale(1); }
+    0% {
+        transform: translateY(0px) scale(1);
+    }
+
+    50% {
+        transform: translateY(-15px) scale(1.05);
+    }
+
+    100% {
+        transform: translateY(0px) scale(1);
+    }
 }
 
 /* Specific Positions matching the design marks */
-.floating-icon--1 { /* Top Left - Investimento/Ganho */
+.floating-icon--1 {
+    /* Top Left - Investimento/Ganho */
     top: 5%;
     left: -5%;
     animation-delay: 0s;
 }
 
-.floating-icon--2 { /* Top Center - Imobiliária */
+.floating-icon--2 {
+    /* Top Center - Imobiliária */
     top: -10%;
     left: 45%;
     animation-delay: 1.5s;
 }
 
-.floating-icon--3 { /* Top Right - Crescimento */
+.floating-icon--3 {
+    /* Top Right - Crescimento */
     top: 5%;
     right: -10%;
     animation-delay: 3s;
 }
 
-.floating-icon--4 { /* Middle Right - Escala */
+.floating-icon--4 {
+    /* Middle Right - Escala */
     top: 50%;
     right: -10%;
     animation-delay: 4.5s;
@@ -410,14 +424,28 @@ svg {
         width: 50px;
         height: 50px;
     }
+
     .floating-icon svg {
         width: 26px;
         height: 26px;
     }
-    .floating-icon--1 { left: 5%; }
-    .floating-icon--2 { top: -5%; left: 40%; }
-    .floating-icon--3 { right: 5%; }
-    .floating-icon--4 { right: 5%; }
+
+    .floating-icon--1 {
+        left: 5%;
+    }
+
+    .floating-icon--2 {
+        top: -5%;
+        left: 40%;
+    }
+
+    .floating-icon--3 {
+        right: 5%;
+    }
+
+    .floating-icon--4 {
+        right: 5%;
+    }
 }
 
 /* ==========================================================================
@@ -614,20 +642,33 @@ svg {
     padding: var(--spacing-8) 0;
 }
 
+.pillars .container {
+    max-width: 1320px;
+}
+
 .pillars__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    /* Reduced from 2rem */
 }
 
 .pillar-card {
     background: var(--color-navy-light);
-    padding: 3rem 2.5rem;
+    padding: 2rem;
+    /* Tightened from 2.5rem */
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     position: relative;
     overflow: hidden;
     transition: var(--transition-smooth);
+}
+
+.pillar-card__header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
 }
 
 .pillar-card::before {
@@ -643,8 +684,9 @@ svg {
 }
 
 .pillar-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
+    /* Less dramatic jump */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     border-color: rgba(212, 175, 55, 0.1);
 }
 
@@ -653,20 +695,77 @@ svg {
 }
 
 .pillar-card__icon {
-    width: 50px;
-    height: 50px;
+    flex-shrink: 0;
+    width: 40px;
+    /* Smaller icon */
+    height: 40px;
     color: var(--color-gold);
-    margin-bottom: var(--spacing-3);
+    margin-bottom: 0;
+    /* Removed bottom margin as it's now horizontal */
 }
 
 .pillar-card__title {
-    font-size: 1.5rem;
-    margin-bottom: var(--spacing-2);
+    font-size: 1.35rem;
+    /* Slightly smaller */
+    margin-bottom: 0;
+    /* Header handles spacing */
 }
 
 .pillar-card__desc {
     color: var(--color-text-muted);
-    font-size: 1rem;
+    font-size: 0.95rem;
+    /* Slightly smaller */
+    line-height: 1.5;
+}
+
+/* Pillars — Responsive */
+@media (max-width: 1200px) {
+    .pillar-card {
+        padding: 1.5rem;
+    }
+
+    .pillar-card__header {
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .pillar-card__icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .pillar-card__title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .pillars__grid {
+        gap: 1rem;
+    }
+
+    .pillar-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pillars__grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .pillar-card__header {
+        gap: 0.75rem;
+    }
+
+    .pillar-card__title {
+        font-size: 1.1rem;
+    }
+
+    .pillar-card__desc {
+        font-size: 0.9rem;
+    }
 }
 
 /* ==========================================================================
@@ -753,7 +852,8 @@ svg {
 }
 
 /* Timeline — responsive adjustments */
-@media screen and (max-width: 1440px), screen and (max-height: 850px) {
+@media screen and (max-width: 1440px),
+screen and (max-height: 850px) {
     .timeline-section {
         padding: 4rem 0;
     }
@@ -787,7 +887,8 @@ svg {
 
     .timeline__item::before {
         bottom: -2rem;
-        left: 21px; /* center of 44px node: 44/2 - 1 */
+        left: 21px;
+        /* center of 44px node: 44/2 - 1 */
     }
 
     .timeline__node {
@@ -816,7 +917,8 @@ svg {
 
     .timeline__item::before {
         bottom: -1.5rem;
-        left: 18px; /* center of 38px node: 38/2 - 1 */
+        left: 18px;
+        /* center of 38px node: 38/2 - 1 */
     }
 
     .timeline__node {
@@ -1139,7 +1241,9 @@ svg {
 .pricing-option-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
     opacity: 0;
@@ -1210,7 +1314,8 @@ svg {
 .price-cents {
     font-size: 1rem;
     color: var(--color-text-muted);
-    -webkit-text-fill-color: var(--color-text-muted); /* Overrides inherited gradient on cents */
+    -webkit-text-fill-color: var(--color-text-muted);
+    /* Overrides inherited gradient on cents */
 }
 
 .pricing-btn {
@@ -1237,50 +1342,64 @@ svg {
 }
 
 /* Pricing — responsive breakpoints */
-@media screen and (max-width: 1440px), screen and (max-height: 850px) {
+@media screen and (max-width: 1440px),
+screen and (max-height: 850px) {
     .pricing-section {
         padding: 3.5rem 0;
     }
+
     .pricing-layout {
         margin-top: 1.5rem;
     }
+
     .pricing-features__title {
         font-size: 1.3rem;
     }
+
     .pricing-features__subtitle {
         font-size: 0.9rem;
         margin-bottom: 1rem;
     }
+
     .pricing-features__list li {
         margin-bottom: 0.6rem;
         font-size: 0.9rem;
     }
+
     .pricing-option__title {
         font-size: 1.3rem;
     }
+
     .price-value {
         font-size: 1.7rem;
     }
+
     .pricing-custom-card {
         padding: 1.5rem 2rem;
     }
+
     .pricing-custom__title {
         font-size: 1.4rem;
     }
+
     .pricing-custom__desc {
         font-size: 0.9rem;
         margin-bottom: 0.75rem;
     }
+
     .pricing-custom__perks li {
         font-size: 0.85rem;
     }
+
     .pricing-custom-btn {
         padding: 0.9rem 1.5rem;
         font-size: 0.9rem;
     }
+
     .pricing-custom__right {
         min-width: 210px;
     }
+
     .pricing-custom-wrapper {
         margin-top: 1rem;
     }
@@ -1291,23 +1410,29 @@ svg {
         grid-template-columns: 1fr;
         max-width: 600px;
     }
+
     .pricing-options-column {
         flex-direction: row;
         gap: 1rem;
     }
+
     .pricing-option-card {
         flex: 1;
     }
+
     .pricing-custom-wrapper {
         max-width: 600px;
     }
+
     .pricing-custom__content {
         flex-direction: column;
         gap: 1.5rem;
     }
+
     .pricing-custom__left {
         flex-direction: row;
     }
+
     .pricing-custom__right {
         width: 100%;
         min-width: unset;
@@ -1316,6 +1441,7 @@ svg {
         align-items: center;
         gap: 1rem;
     }
+
     .pricing-custom__cta-label {
         margin-bottom: 0;
         text-align: left;
@@ -1327,60 +1453,77 @@ svg {
     .pricing-section {
         padding: 2.5rem 0;
     }
+
     .pricing-layout {
         margin-top: 1rem;
         gap: 1rem;
     }
+
     .pricing-features-card {
         padding: 1.5rem;
     }
+
     .pricing-features__title {
         font-size: 1.1rem;
         margin-bottom: 0.5rem;
     }
+
     .pricing-features__subtitle {
         font-size: 0.85rem;
         margin-bottom: 0.75rem;
     }
+
     .pricing-features__list li {
         margin-bottom: 0.4rem;
         font-size: 0.85rem;
     }
+
     .pricing-option-card {
         padding: 1rem 1.25rem;
     }
+
     .pricing-option__title {
         font-size: 1.1rem;
         margin-bottom: 0.3rem;
     }
+
     .pricing-option__desc {
         font-size: 0.85rem;
     }
+
     .price-value {
         font-size: 1.5rem;
     }
+
     .pricing-custom-wrapper {
         margin-top: 0.75rem;
     }
+
     .pricing-custom-card {
         padding: 1.25rem 1.5rem;
     }
+
     .pricing-custom__icon {
         width: 44px;
         height: 44px;
-        display: none; /* Hide icon on very short screens */
+        display: none;
+        /* Hide icon on very short screens */
     }
+
     .pricing-custom__title {
         font-size: 1.1rem;
         margin-bottom: 0.3rem;
     }
+
     .pricing-custom__desc {
         font-size: 0.82rem;
         margin-bottom: 0.5rem;
     }
+
     .pricing-custom__perks li {
         font-size: 0.8rem;
     }
+
     .pricing-custom-btn {
         padding: 0.75rem 1.25rem;
         font-size: 0.85rem;
@@ -1407,7 +1550,9 @@ svg {
 .pricing-custom-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent 0%, var(--color-gold) 30%, var(--color-gold-light) 50%, var(--color-gold) 70%, transparent 100%);
     animation: shimmer-line 3s ease-in-out infinite;
@@ -1415,14 +1560,20 @@ svg {
 }
 
 @keyframes shimmer-line {
-    0%   { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 .pricing-custom-card::after {
     content: '';
     position: absolute;
-    bottom: -40px; right: -40px;
+    bottom: -40px;
+    right: -40px;
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -1553,25 +1704,31 @@ svg {
         flex-direction: column;
         gap: 1.5rem;
     }
+
     .pricing-custom__left {
         flex-direction: column;
     }
+
     .pricing-custom__right {
         width: 100%;
         min-width: unset;
         flex-direction: column;
         align-items: stretch;
     }
+
     .pricing-custom__cta-label {
         text-align: center;
     }
+
     .pricing-custom__badge {
         top: 1rem;
         right: 1rem;
     }
+
     .pricing-custom-card {
         padding: 2rem 1.5rem;
     }
+
     .pricing-options-column {
         flex-direction: column;
     }
@@ -1792,17 +1949,44 @@ screen and (max-height: 850px) {
     .hero__container {
         grid-template-columns: 1fr;
         padding-top: 0;
-        gap: 4.5rem; /* Aumentado para dar mais espaço no mobile */
+        gap: 0;
+        position: static;
+        /* libera o hero__image-wrapper para ancorar no .hero */
     }
 
-    /* Empurra a imagem e ícones para baixo no mobile */
-    .hero__image-wrapper {
-        padding-top: 4.5rem; /* Margem maior para limpar os ícones flutuantes */
+    /* O conteúdo de texto fica acima da foto de fundo */
+    .hero__content {
+        position: relative;
+        z-index: 2;
     }
 
-    /* Traz o ícone do topo um pouco mais para baixo no mobile para não colar no texto */
-    .floating-icon--2 {
-        top: -2% !important;
+    /* No mobile: oculta completamente a foto do Felipe — apenas o apartamento fica no fundo */
+    .hero__image-wrapper,
+    .hero__image-wrapper.reveal,
+    .hero__image-wrapper.reveal.active {
+        display: none !important;
+    }
+
+    /* Remove o anel dourado circular no mobile */
+    .hero__image-wrapper::before {
+        display: none;
+    }
+
+    /* A foto preenche a altura toda da seção, sem gradiente inferior */
+    .hero__image {
+        width: auto;
+        height: 100%;
+        max-width: none;
+        max-height: 100%;
+        object-fit: contain;
+        mask-image: none;
+        -webkit-mask-image: none;
+        filter: none;
+    }
+
+    /* Ocultar todos os ícones flutuantes no mobile */
+    .floating-icon {
+        display: none;
     }
 
     .hero__title {
@@ -1813,19 +1997,12 @@ screen and (max-height: 850px) {
         align-items: stretch;
     }
 
-    /* Centraliza o card "Felipe Müller" — reseta o transform herdado */
+    /* Oculta a tag do especialista no mobile: ela ficaria solta sobre o fundo */
     .hero__specialist-tag {
-        bottom: 1rem;
-        left: 50%;
-        right: auto;
-        width: calc(100% - 2rem); /* ocupa largura do container com margens laterais */
-        max-width: 320px;
-        transform: translateX(-50%);
-        text-align: center;
+        display: none;
     }
 
     .pain__grid,
-    .pillars__grid,
     .proof-grid,
     .filter-cards {
         grid-template-columns: 1fr;
@@ -1864,7 +2041,8 @@ screen and (max-height: 850px) {
 
     .timeline__item::before {
         bottom: -1.5rem;
-        left: 17px; /* center of 36px node: 36/2 - 1 */
+        left: 17px;
+        /* center of 36px node: 36/2 - 1 */
     }
 
     .filter-card {
