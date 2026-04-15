@@ -784,7 +784,7 @@ svg {
    ========================================================================== */
 .timeline-section {
     padding: var(--spacing-8) 0;
-    background-color: var(--color-navy-light);
+    background-color: #050A15;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
     overflow: hidden;
 }
