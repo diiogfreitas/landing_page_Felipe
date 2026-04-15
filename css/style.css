@@ -939,7 +939,10 @@ screen and (max-height: 850px) {
 /* ==========================================================================
    Social Proof
    ========================================================================== */
+
+/* TEMPORARIAMENTE OCULTA — remova o display:none abaixo para reativar a seção */
 .social-proof {
+    display: none;
     padding: var(--spacing-8) 0;
 }
 
